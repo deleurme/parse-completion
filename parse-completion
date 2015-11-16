@@ -12,7 +12,6 @@ _parse() {
   prev="${COMP_WORDS[COMP_CWORD-1]}"
 
 	commands="add configure default deploy develop download functions generate jssdk list logs migrate new releases rollback symbols triggers update version --help"
-	# help_lookup=$commands
 
   # add         Adds a new Parse App to config in current Cloud Code directory
   # configure   Configure various Parse settings
@@ -37,6 +36,7 @@ _parse() {
 
     hooks )
       args="--help -b --base= -s --strict=" 
+      # app=$(jq .applications._default.link .parse.local)
       COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
       return 0
       ;;
@@ -53,8 +53,20 @@ _parse() {
       return 0
       ;;
 
+    symbols )
+      args="--help -t -a -m -p --aapt= --apk= --manifest= --path= " 
+      COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+      return 0
+      ;;
+
+    functions )
+      args="--help create edit delete" 
+      COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+      return 0
+      ;;
+
     deploy )
-      args="--description= -d -f --force= -n --retries= -v --verbose=" 
+      args="--help --description= -d -f --force= -n --retries= -v --verbose=" 
       COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
       return 0
       ;;
