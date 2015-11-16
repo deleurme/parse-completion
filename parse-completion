@@ -1,0 +1,88 @@
+# vim: ft=sh 
+#     ____  ____ ______________ 
+#    / __ \/ __ `/ ___/ ___/ _ \
+#   / /_/ / /_/ / /  (__  )  __/
+#  / .___/\__,_/_/  /____/\___/ 
+# /_/                           
+#
+_parse() {
+  local cur prev opts base
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+	commands="add configure default deploy develop download functions generate jssdk list logs migrate new releases rollback symbols triggers update version --help"
+	# help_lookup=$commands
+
+  # add         Adds a new Parse App to config in current Cloud Code directory
+  # configure   Configure various Parse settings
+  # default     Sets or gets the default Parse App
+  # deploy      Deploys a Parse App
+  # develop     Monitors for changes to code and deploys, also tails parse logs
+  # download    Downloads the Cloud Code project
+  # functions   List Cloud Code functions and function webhooks
+  # generate    Generates a sample express app in the current project directory
+  # jssdk       Sets the Parse JavaScript SDK version to use in Cloud Code
+  # list        Lists properties of given Parse app and Parse apps associated with given project
+  # logs        Prints out recent log messages
+  # migrate     Migrate project config format to preferred format
+  # new         Adds Cloud Code to an existing Parse app, additional can create a new Parse app
+  # releases    Gets the releases for a Parse App
+  # rollback    Rolls back the version for the given app
+  # symbols     Uploads symbol files
+  # triggers    List Cloud Code triggers and trigger webhooks
+  # update      Updates this tool to the latest version
+  # version     Gets the Command Line Tools version
+	case "${prev}" in
+    # show )
+    #   secn="${COMP_WORDS[COMP_CWORD-2]}"
+    #   if [ ${secn} == "action" ]; then 
+    #     args=$(parse action list|awk '{if (NR!=1) {print $1}}')
+    #   elif [ ${secn} == "domain" ]; then 
+    #     args=$(parse domain|awk '{if (NR!=1) {print $1}}') 
+    #   fi
+    #   COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+    #   return 0
+    #   ;;
+    # list|find|destroy|reboot|power_cycle|off|on|password_reset|resize)
+    #   args=$(parse droplet|awk '{if (NR!=1) {print $2}}')
+    #   COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+    #   return 0
+    #   ;;
+    deploy )
+      args="--description= -d -f --force= -n --retries= -v --verbose=" 
+      COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+      return 0
+      ;;
+    # keys )
+    #   args="create list show destroy" 
+    #   COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+    #   return 0
+    #   ;;
+    # droplet )
+    #   args="create list find destroy reboot power_cycle off on password_reset resize" 
+    #   COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+    #   return 0
+    #   ;;
+		# help )
+		# 	args=$(for word in $help_lookup;do echo "$word";done)
+		# 	COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+		# 	return 0
+		# 	;;
+    # action )
+    #   args="list show $(parse action list|awk '{if (NR!=1) {print $5}}')"
+    #   COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+    #   return 0
+    #   ;;
+    #   # parse action list|awk '{if (NR!=1) {print $5}}'
+
+	esac
+  
+  # parse list-units |awk '{print $1}'|sed 1d
+
+  COMPREPLY=($(compgen -W "${commands}" -- "${cur}"))
+  return 0
+}
+
+complete -F _parse parse
+
