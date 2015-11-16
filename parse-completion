@@ -34,47 +34,30 @@ _parse() {
   # update      Updates this tool to the latest version
   # version     Gets the Command Line Tools version
 	case "${prev}" in
-    # show )
-    #   secn="${COMP_WORDS[COMP_CWORD-2]}"
-    #   if [ ${secn} == "action" ]; then 
-    #     args=$(parse action list|awk '{if (NR!=1) {print $1}}')
-    #   elif [ ${secn} == "domain" ]; then 
-    #     args=$(parse domain|awk '{if (NR!=1) {print $1}}') 
-    #   fi
-    #   COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
-    #   return 0
-    #   ;;
-    # list|find|destroy|reboot|power_cycle|off|on|password_reset|resize)
-    #   args=$(parse droplet|awk '{if (NR!=1) {print $2}}')
-    #   COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
-    #   return 0
-    #   ;;
+
+    hooks )
+      args="--help -b --base= -s --strict=" 
+      COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+      return 0
+      ;;
+
+    accountkey )
+      args="--help -d --default" 
+      COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+      return 0
+      ;;
+
+    configure )
+      args="accountkey email project hooks" 
+      COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+      return 0
+      ;;
+
     deploy )
       args="--description= -d -f --force= -n --retries= -v --verbose=" 
       COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
       return 0
       ;;
-    # keys )
-    #   args="create list show destroy" 
-    #   COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
-    #   return 0
-    #   ;;
-    # droplet )
-    #   args="create list find destroy reboot power_cycle off on password_reset resize" 
-    #   COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
-    #   return 0
-    #   ;;
-		# help )
-		# 	args=$(for word in $help_lookup;do echo "$word";done)
-		# 	COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
-		# 	return 0
-		# 	;;
-    # action )
-    #   args="list show $(parse action list|awk '{if (NR!=1) {print $5}}')"
-    #   COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
-    #   return 0
-    #   ;;
-    #   # parse action list|awk '{if (NR!=1) {print $5}}'
 
 	esac
   
