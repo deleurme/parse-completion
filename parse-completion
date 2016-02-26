@@ -59,6 +59,12 @@ _parse() {
       return 0
       ;;
 
+    triggers )
+      args="--help create edit delete" 
+      COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
+      return 0
+      ;;
+
     functions )
       args="--help create edit delete" 
       COMPREPLY=( $(compgen -W "${args}" -- "${cur}") )
@@ -73,11 +79,8 @@ _parse() {
 
 	esac
   
-  # parse list-units |awk '{print $1}'|sed 1d
-
   COMPREPLY=($(compgen -W "${commands}" -- "${cur}"))
   return 0
 }
 
 complete -F _parse parse
-
